@@ -1,5 +1,5 @@
 {
-  "name": "site-creator-vinext-starter",
+  "name": "atlas-forge",
   "version": "0.1.0",
   "private": true,
   "engines": {
@@ -11,7 +11,8 @@
     "start": "vinext start",
     "test": "npm run build && node --test tests/rendered-html.test.mjs",
     "lint": "eslint . --ignore-pattern dist --ignore-pattern .next",
-    "db:generate": "drizzle-kit generate"
+    "db:generate": "drizzle-kit generate",
+    "research:import": "node scripts/import-research-network.mjs"
   },
   "dependencies": {
     "drizzle-orm": "0.45.2",

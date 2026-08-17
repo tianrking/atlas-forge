@@ -1471,8 +1471,8 @@ export default function Home() {
               <span />
               <span />
             </span>
-            <span>AI SUPPLY CHAIN LAB</span>
-            <span className="brand-lockup__muted">US EQUITIES / 2026</span>
+            <span>ATLAS FORGE</span>
+            <span className="brand-lockup__muted">EQUITY ECOSYSTEM / DOMAIN 01</span>
           </div>
           <div className="hero__status">
             <span className="status-dot" />

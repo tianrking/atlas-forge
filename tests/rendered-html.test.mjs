@@ -31,7 +31,7 @@ test("server-renders the interactive five-layer supply-chain map", async () => {
   assert.match(response.headers.get("content-type") ?? "", /^text\/html\b/i);
 
   const html = await response.text();
-  assert.match(html, /AI SUPPLY CHAIN LAB/);
+  assert.match(html, /ATLAS FORGE/);
   assert.match(html, /五层供应链树/);
   assert.match(html, /大语言模型能力提升/);
   assert.match(html, /HBM/);
@@ -57,7 +57,7 @@ test("keeps the tree data and interaction model explicit", async () => {
   assert.match(page, /GFS/);
   assert.match(page, /KLAC/);
   assert.match(page, /scenarioId/);
-  assert.match(layout, /title: "AI Supply Chain Lab/);
+  assert.match(layout, /title: "Atlas Forge/);
   assert.match(layout, /lang="zh-CN"/);
   assert.match(css, /\.tree-children/);
   assert.match(css, /\.tree-node--root/);

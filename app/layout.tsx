@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "AI Supply Chain Lab — 五层上游产业链树",
+  title: "Atlas Forge — AI Infrastructure Research Map",
   description:
-    "可交互拆解大语言模型能力提升如何传导到 GPU、HBM、网络、硅光、封装、电力与液冷产业链。",
+    "Agent 驱动的技术、产业、公司与上下游关系研究平台。当前展示 AI 基础设施领域的五层美股产业链地图。",
   icons: {
     icon: "/favicon.svg",
     shortcut: "/favicon.svg",

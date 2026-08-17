@@ -1,0 +1,662 @@
+%% AI infrastructure supply-chain network expansion
+%% Direction: arrows mean "creates demand for / feeds into", from demand toward upstream nodes.
+%% Dashed arrows indicate a substitution or demand-reduction relationship rather than a normal upstream feed.
+%% Status: research map v76, 2026-08-17. Company inclusion is not an investment recommendation.
+
+flowchart LR
+    R["AI applications, model usage, and cloud capex"]
+
+    subgraph DEMAND["Demand and compute platforms"]
+        H["Hyperscalers: Microsoft, Amazon, Alphabet, Meta, Oracle"]
+        G["GPU / AI ASIC: NVIDIA, AMD, Broadcom"]
+        M["HBM / DRAM: SK hynix, Micron, Samsung"]
+        C["CPU / DPU / CXL: Intel, AMD, Arm, NVIDIA, Astera Labs"]
+        S["SSD / HDD: Micron, SanDisk, Seagate, Western Digital"]
+    end
+
+    subgraph STORAGE["Storage components and media"]
+        HDDC["Nearline HDD systems: Seagate, Western Digital"]
+        HDDUP["HDD heads, suspensions, and HAMR writer: TDK, NHK Spring, Seagate"]
+        HDDMOTOR["HDD spindle motors: Nidec"]
+        HDDMEDIA["Recording media and disk substrates: Seagate, Resonac HD"]
+        SSDCTRL["Enterprise SSD controllers and firmware: Phison, Silicon Motion, Kioxia, Marvell"]
+        LINK["PCIe/CXL retimers and smart fabric: Astera Labs, Marvell, Broadcom"]
+        CXLMEM["CXL Type 3 memory expansion and pooling: Micron, Montage, Rambus"]
+        CXLSW["CXL switch and fabric: Astera Labs, Microchip"]
+        CXLSTACK["CXL Fabric Manager and pooling software: MemVerge, OCP, Linux"]
+    end
+
+    subgraph SYSTEM["Servers, networking, and optical interconnect"]
+        O["ODM and AI systems: Supermicro, Dell, HPE, Celestica, Jabil"]
+        CXLHOST["CXL server platforms and cloud validation: Intel, Dell, Supermicro, Microsoft Azure"]
+        CXLFW["CXL firmware, ACPI/BIOS, and Linux memory hotplug: Intel, Dell, Linux"]
+        SW["Switching and scale-out: Broadcom, Arista, Cisco, Marvell"]
+        OPT["Optics and DSP: Coherent, Lumentum, Credo, MACOM, POET"]
+        OPTOIII["InP/GaAs epiwafers, EML/DFB/photodetector structures: Coherent, IQE"]
+        OPTSUB["InP/GaAs substrate wafers and VGF growth: IQE, AXT"]
+        OPTSOURCE["Indium/gallium/phosphorus/arsenic source materials: AXT integrated suppliers and upstream refiners"]
+        OPTINDIUM["6N/6N5 high-purity indium for InP/InGaAsP and epitaxy: Indium Corporation"]
+        OPTGAS["Ultra-high-purity arsine/phosphine/ammonia for MOCVD: Air Products"]
+        OPTEQ["InP/GaAs MOCVD, IBD facet coating and wet processing: Veeco, AIXTRON"]
+        OPTINSPECT["Compound-semiconductor substrate/epi defect inspection: KLA Candela 8720"]
+        OPTMETRO["Epi thickness, composition and impurity mapping: Onto Innovation Element G2"]
+        OPTWTEST["Automated InP/SiP wafer optical coupling and electro-optic test: FormFactor"]
+        FM["Optical manufacturing: Fabrinet, Corning, Sumitomo Electric"]
+        CON["High-speed connectors and PCB: Amphenol, TE, TTM, Rogers"]
+    end
+
+    subgraph PKG["Advanced packaging and substrate"]
+        F["Foundry and packaging: TSMC, Samsung, Intel, ASE, Amkor"]
+        SUB["Package substrate: Ibiden, AT&S, Unimicron, TTM"]
+        ABF["ABF and package materials: Ajinomoto, Resonac, DuPont, Denka"]
+        CCL["BT resin / CCL / prepreg: MGC, Panasonic, Resonac"]
+        CUFOIL["Fine copper foil: Resonac, JX Metals candidate, Mitsui Kinzoku"]
+        GLASS["Low-Dk glass cloth: Resonac, Nittobo"]
+        PLATE["Substrate plating and chemistry: MKS Atotech, ESI"]
+        FILLER["Silica fillers and low-Dk compounds: Denka"]
+        EDA["Chiplet / package EDA: Synopsys, Cadence"]
+    end
+
+    subgraph WFE["Wafer fabrication, metrology, and test equipment"]
+        LITH["Lithography: ASML"]
+        PROC["Deposition / etch / CMP: Applied Materials, Lam Research, TEL, ASM"]
+        MET["Process control: KLA, Onto Innovation"]
+        TEST["Test and probe: Advantest, Teradyne, FormFactor"]
+        BACK["Dicing / bonding / packaging: DISCO, Besi"]
+        VAC["Vacuum: VAT Group, Ebara, ULVAC"]
+        WBGFURN["SiC/AlN PVT crystal-growth systems: PVA TePla"]
+        EPIEQ["150/200 mm SiC/GaN epitaxy equipment: AIXTRON"]
+    end
+
+    subgraph MAT["Wafer, chemical, gas, and filter materials"]
+        WAF["Wafers: Shin-Etsu, SUMCO, GlobalWafers, Siltronic"]
+        POLY["Semiconductor polysilicon and high-purity chlorosilanes: Wacker, Tokuyama, Hemlock"]
+        POLYRAW["Metallurgical silicon, quartz and carbon reductants for polysilicon: Wacker, Tokuyama, Elkem, Sibelco"]
+        POLYCHLOR["HCl, TCS/STC and chlorosilane purification / recycle chemistry: Wacker, Tokuyama"]
+        GAS["Ultra-pure gases: Air Liquide, Linde, Air Products"]
+        GASDEL["On-site gas plants and bulk delivery: Linde, Air Products, Iwatani, Nippon Sanso"]
+        SPEC["Electronic specialty gases and precursors: Merck, SK Materials, Kanto Denka"]
+        GASEQ["Gas panels, MFCs, UHP valves, abatement: MKS, HORIBA, Fujikin, Ebara, Edwards"]
+        GASPUR["Gas purification and point-of-use filters: Entegris"]
+        GASMON["Process gas analysis and hazardous-gas monitoring: INFICON, Honeywell"]
+        CMP["CMP pads, slurry, filtration, and particle metrology: Entegris, DuPont/Qnity"]
+        CMPABR["CMP abrasives and slurry formulations: Fujimi, Merck"]
+        PUPAD["CMP polyurethane pad chemistry: Qnity/DuPont"]
+        CMPRAW["Ultra-high-purity silica and ceria abrasive feedstock: Evonik, Cabot"]
+        CMPPADRAW["Thermoset/thermoplastic polyurethane pad chemistry: Entegris, Qnity/DuPont"]
+        CMPFILTERRAW["Nano-melt-blown filter media and ultraclean polymer housings: Entegris"]
+        CONDITION["CMP pad conditioners and coatings: 3M"]
+        PACK["Ultrapure chemical packaging and delivery: Entegris, Merck"]
+        RAREGAS["Rare-gas separation and recycling: TEMC, POSCO Air Solution"]
+        ABATE["PFC abatement and low-GWP substitution: Edwards, Kanto Denka"]
+        CHEM["CMP / process materials: Entegris, DuPont, Resonac, Merck"]
+        PHOTO["EUV / HBM resists: JSR, TOK, Fujifilm, Shin-Etsu"]
+        QUARTZ["Quartz / ceramics / CVD-SiC parts: Ferrotec, Heraeus, Momentive, Sibelco IOTA"]
+        FIBER["Fiber and optical materials: Corning, Shin-Etsu, Furukawa"]
+        WBGPOW["SiC source powder and bonded substrates: Resonac, Soitec"]
+        GA["High-purity gallium, TMGa/TEGa, and GaN precursors: Umicore, DOWA, Indium"]
+        FIBERPRE["Optical-fiber preforms, OVD/VAD laydown and draw process: Corning, Sumitomo Electric"]
+        FIBERDOP["Germanium/fluorine dopants and high-purity silica vapor chemistry: Umicore, Corning, Sumitomo Electric"]
+    end
+
+    subgraph FABUTIL["Fab utilities, cleanroom, and water"]
+        UPW["UPW and water systems: Kurita, Veolia, Xylem, Ecolab"]
+        HVAC["Cleanroom HVAC: Daikin, Johnson Controls, Trane, Carrier, Munters"]
+        WASTE["Chemical recovery and wastewater: Veolia, Ecolab, Kurita"]
+        RO["RO/NF membranes and ion-exchange resins: DuPont FilmTec, Kurita"]
+        ROIX["Semiconductor-grade ion-exchange resins and final polishers: LANXESS Lewatit, Xylem/Evoqua"]
+        WATERMEM["Thin-film composite RO/NF membrane sheets: DuPont FilmTec, Toray"]
+        WATERRESIN["Ultra-pure ion-exchange resin beads and polishers: LANXESS, Xylem/Evoqua"]
+        WATERCHEM["RO antiscalants, biocides, corrosion inhibitors and regenerants: Kurita, Ecolab"]
+    end
+
+    subgraph POWER["Power conversion and data-center electrical architecture"]
+        GRID["Grid connection and substations: GE Vernova, Siemens Energy, Hitachi"]
+        DIST["Switchgear / UPS / distribution: Schneider, Eaton, ABB, Vertiv"]
+        UPSLEAD["Short-duration UPS batteries, VRLA/TPPL and Li-ion alternatives: EnerSys, Vertiv"]
+        LEADMAKE["VRLA battery manufacturing, lead-tin-calcium grids and recycled-material loop: EnerSys, East Penn, Stryten, Clarios"]
+        HVDC["400–800V DC / power racks: Infineon, ST, onsemi, TI"]
+        PASS["Capacitors / inductors / EMC: TDK, Murata, Nippon Chemi-Con, Vishay"]
+        PASSFILM["800–1100V metallized polypropylene DC-link film capacitors: Panasonic"]
+        PASSCERAM["BaTiO3/ferrite MLCC dielectric and Ni/Ag/Cu materials: Murata, Fuji Titanium"]
+        PASSMAG["Mn-Zn ferrite cores for high-frequency power conversion: TDK, Murata"]
+        PASSALUM["Aluminum electrolytic capacitors and etched/formed foil: Nippon Chemi-Con"]
+        PASSFILMRAW["Polypropylene dielectric film and aluminum metallization feedstock: Panasonic, polymer and aluminum suppliers"]
+        PASSALUMRAW["4N aluminum foil, chloride etchants, Al2O3 dielectric, EG/GBL electrolyte and separator paper: Nippon Chemi-Con"]
+        PASSCERAMRAW["Barium carbonate, strontium carbonate and TiO2 for BaTiO3: Fuji Titanium, Ishihara Sangyo"]
+        PASSMAGRAW["Fe2O3, Mn2O3, ZnO ferrite powders and 1000–1400°C sintering: TDK"]
+        PASSALUMSUP["Capacitor-grade aluminum foil and chemical conversion: UACJ, Nippon Light Metal, Japan Capacitor Industrial"]
+        PASSBARAW["High-purity barium carbonate for MLCC BaTiO3: Nippon Chemical Industry"]
+        PASSTIRAW["High-purity TiO2 for BaTiO3/electronic ceramics: Ishihara Sangyo, Fuji Titanium"]
+        GEN["Backup and on-site generation: Caterpillar, Cummins, Generac"]
+        GASGEN["Fast-start gas turbines and gensets: GE Vernova, Rolls-Royce mtu, MHI, Caterpillar"]
+        GASCTRL["Turbine/compressor controls, fuel valves, and actuators: Woodward, Siemens, Emerson"]
+        NUCLEAR["Existing nuclear restart and long-term PPAs: Constellation, Talen, NextEra"]
+        GEO["Enhanced geothermal and 24/7 clean power: Fervo, Baseload Capital"]
+        LDES["Grid-scale battery and long-duration storage: Fluence, Form Energy, Hydrostor"]
+        FLEX["Flexible data-center load and demand response: Google, utilities"]
+        BATCELL["LFP battery cells and modules: Fluence domestic chain, AESC/Fixx candidate"]
+        BESSBOP["BESS enclosures, HVAC/chillers, PCS and controls: Fluence, Bergstrom, partners"]
+        BESSTHERM["BESS liquid cooling and HVAC/chillers: Fluence Houston, Bergstrom"]
+        BESSFIRE["BESS fire, deflagration, gas detection and certification: Fluence, CSA Group, Safe Labs"]
+        BESSCOMP["BESS chiller component layer: variable-speed DC compressor, R32, glycol and Modbus controls; BOM undisclosed"]
+        BESSDET["BESS early off-gas detection candidates: Honeywell Li-ion Tamer/BES LITE, Johnson Controls ANSUL, MSA"]
+        BESSSUP["BESS thermal-runaway suppression candidates: Fike Blue and ANSUL inert-gas systems; no Fluence BOM"]
+        BESSREF["BESS refrigerant and coolant candidate layer: R32 producers, Dow glycol and Danfoss variable-speed systems; no Fluence BOM"]
+        PCS["Power conversion / inverter and grid-forming controls: Fluence, EPC Power likely cross-source match"]
+        GEOWELL["Geothermal drilling and well tubulars: Helmerich & Payne, Vallourec"]
+        GEOBIT["Geothermal PDC drill bits and high-temperature drilling: Baker Hughes Vulcanix"]
+        GEOPUMP["Brine reinjection pumps and subsurface power equipment: Baker Hughes"]
+        GEOCEMENT["High-temperature cement, drilling fluids, and liner hangers: Halliburton"]
+        GEOLOG["Geothermal formation imaging and downhole logging: Halliburton StrataXaminer"]
+        GEOHEAD["Wellhead and Christmas-tree interface: supplier undisclosed; high-temperature pressure qualification"]
+        GEOHEADALT["Geothermal wellhead candidate pool: Hartmann, TIX, SLB Cameron; no Fervo order disclosed"]
+        GEOSEAL["Wellhead seals, packing and gaskets: metal-to-metal, Inconel/nickel alloy, API 6A Annex F"]
+        GEOPUMPCOMP["Reinjection-pump component layer: multistage pump, motor, VSD, thrust chamber, coatings and seals"]
+        GEOPUMPALT["Geothermal pump alternative pool: Flowserve, Sulzer, KSB; no Fervo order disclosed"]
+        GEOTURB["Geothermal ORC turbines and power blocks: Turboden, Mitsubishi Heavy Industries"]
+        GEOTHX["Geothermal ORC air-cooled condensers and heat exchangers: Turboden in-house; external supplier undisclosed"]
+        GEOALT["ORC and cooling alternative pool: Siemens Energy, Alfa Laval, API Heat Transfer; no Fervo order disclosed"]
+        GEOCTRL["Geothermal electrification and motor control: ABB"]
+        TRMAT["Transformer materials: electrical steel, copper, aluminum"]
+        TRCOMP["Transformer components: bushings, tap changers"]
+        TRINS["Transformer insulation paper and pressboard: Weidmann, DuPont"]
+        TRFLUID["Transformer dielectric fluids: Cargill, MIDEL"]
+        GIS["SF6-free GIS and clean-air insulation: Siemens Energy, Hitachi Energy"]
+        GISSEAL["GIS gas-tight sealing and interfaces: Trelleborg"]
+        GASSVC["GIS alternative-gas mixing, reclaim, and analysis: DILO"]
+        GISSTD["GIS type-test standards and accreditation: IEC 62271-203, CIGRE, ISO/IEC 17025"]
+        GISTEST["GIS high-voltage type testing and qualification: DNV KEMA Labs, CESI"]
+        GISPD["GIS partial-discharge and field diagnostics: Megger, OMICRON"]
+        TRMON["Transformer monitoring and diagnostics: Qualitrol, Hitachi, Reinhausen"]
+        CUWIND["Transformer copper rod, flat wire, and windings: Aurubis"]
+        PAPER["Transformerboard, kraft/crepe paper, and spacers: Weidmann"]
+        OIL["Mineral, natural-ester, and synthetic-ester fluids: Nynas, Cargill, MIDEL"]
+        TRPULP["Long-fiber cellulose pulp and electrical-grade pressboard: Hitachi Energy, Enpay"]
+        TRBIO["Soybean/rapeseed-derived natural-ester feedstock: Cargill"]
+        DGA["Online DGA, moisture, hotspot, and PD monitoring: Vaisala, Qualitrol"]
+        WINDSTRIP["Transformer winding copper strip: KME"]
+        TROEM["Transformer radiators, tanks, OLTC, and semiconductor power systems: Hyosung"]
+        BUSH["Transformer bushings and on-load tap changers: Hitachi Energy, Reinhausen"]
+        TRCORE["Transformer cores and grain-oriented electrical steel: Nippon Steel, POSCO"]
+        WBG["SiC / GaN power devices and modules: onsemi, Infineon, Rohm, Wolfspeed"]
+    end
+
+    subgraph COOL["Cooling, heat rejection, and water loop"]
+        RACKCOOL["Rack liquid cooling / CDU: Vertiv, Schneider, nVent, CoolIT"]
+        COLDPLATE["AI cold plates and microchannels: Boyd, Modine, CoolIT"]
+        TIM["Thermal interface materials and high-power solder: Dow, Indium"]
+        THERM["Chillers and thermal systems: Modine, Munters, Trane, Carrier, JCI"]
+        HX["Pumps / heat exchangers: Alfa Laval, Xylem, KSB, Sulzer, Grundfos"]
+        HXMAT["316L stainless plate, copper/nickel brazing and heat-exchanger materials: Alfa Laval, Kelvion, Danfoss"]
+        REUSE["Cooling-water treatment and reuse: Kurita, Ecolab, Veolia, Xylem"]
+        WATER["Cooling water source, RO/NF, reuse, and heat recovery: Xylem, Veolia, Ecolab"]
+        CLOSED["Closed-loop zero-evaporation direct-to-chip cooling: Microsoft, liquid-cooling OEMs"]
+        COUP["Liquid-cooling couplings and hoses: Parker, CPC, Swagelok"]
+        SEAL["Liquid-cooling seals and elastomers: Trelleborg, Parker"]
+        FILTER["Coolant filtration and particle control: Donaldson, Pall"]
+        POLYCOOL["Data-center coolant polymers and tubing: Saint-Gobain ICS"]
+        COOLMAT["Liquid-cooling elastomer and fluoropolymer compounds: Trelleborg, Parker, Saint-Gobain"]
+        COOLCHEM["Silicone immersion fluids and FKM/FFKM/PTFE/FEP chemistry: Dow, Wacker, Solvay, Chemours"]
+        VALVE["Cooling valves and control: Belimo, Danfoss, Emerson, Schneider, JCI"]
+        FLUID["Coolants, filters, and chemistry: Dow, Ecolab, Kurita, Xylem, Chemours"]
+        BIOCHEM["Cooling-water biocide, antiscalant, and corrosion control: Kurita, Ecolab"]
+    end
+
+    subgraph EPC["Cables, construction, and grid build-out"]
+        CABLE["Power and data cables: Prysmian, Nexans, Sumitomo Electric, Corning, Borealis/Borouge"]
+        EPC1["Electrical / mechanical EPC: Quanta, EMCOR, Comfort Systems, MYR, MasTec"]
+        MOD["Modular power and data-center rooms: Schneider, Eaton, Vertiv, Comfort Systems"]
+        CONCRETE["Data-center foundations, precast and ready-mix concrete: CRH, Holcim, Heidelberg Materials"]
+        AGG["Aggregates, sand, gravel and crushed rock: CRH, Martin Marietta"]
+        BUILDSTEEL["Rebar, structural steel, metal deck and data-center shell: Nucor, ArcelorMittal"]
+    end
+
+    subgraph RAW["Further upstream: commodities, materials, and generation"]
+        CU["Copper: Freeport, Southern Copper, Aurubis, Rio Tinto, BHP"]
+        MININGBLAST["Copper-mine explosives and blast design: Orica"]
+        MININGEQ["Copper-mine drilling, loading and aftermarket: Epiroc"]
+        MININGPROC["Copper concentration, flotation and electrorefining: Metso"]
+        CUSMELT["Copper-concentrate flash smelting, converting and anode casting: Aurubis, Metso, Freeport"]
+        CUACID["Oxygen, SO2 gas cleaning and sulfuric-acid recovery: Metso, Aurubis, industrial-gas suppliers"]
+        AL["Aluminum and conductor metals: Alcoa, Norsk Hydro, Rio Tinto"]
+        ALRAW["Bauxite, alumina and primary aluminum smelting: Alcoa, Rio Tinto, Hydro"]
+        ALCAUST["Bayer process caustic soda, lime, sulfuric acid and flocculants: Hydro, Alcoa"]
+        ALANODE["Petroleum coke, coal-tar pitch and carbon anodes for aluminum smelting: Rio Tinto, Hydro, Alcoa"]
+        ALELECT["Smelting power, natural gas and electric calcination / inert-anode substitution: Alcoa, Hydro, Rio Tinto"]
+        CABLEMAT["EHV/HVDC cable insulation and semiconductive compounds: Borealis/Borouge Borlink XLPE"]
+        CABLEPEROX["Organic peroxide crosslinkers for XLPE cable insulation: Arkema Luperox/Di-Cup/Vul-Cup"]
+        CABLEFEED["Ethylene/olefin feedstock and polyolefin platform: Borealis/Borouge, ADNOC Gas"]
+        LEADREC["Secondary lead, polypropylene and sulfuric-acid recovery: Ecobat, Clarios, East Penn and recyclers"]
+        CEMENT["Cement, clinker and low-carbon binders: Holcim, Heidelberg Materials, CRH"]
+        CEMENTRAW["Limestone, clay, marl, gypsum, calcined clay and kiln energy: Holcim, Heidelberg Materials"]
+        CEMQUARRY["Cement raw-material quarrying, blasting and crushing: Heidelberg, Holcim, Epiroc, Orica, Metso"]
+        CEMEQUIP["Cement kilns, calciners, grinding and activated-clay equipment: KHD, thyssenkrupp Polysius, Metso"]
+        CEMREF["Cement-kiln refractory linings: RHI Magnesita"]
+        CEMREFRAW["Magnesite, dolomite, alumina and refractory fuel inputs: RHI Magnesita"]
+        CEMWEAR["Cement grinding media, liners and high-chrome wear castings: Magotteaux"]
+        CEMWEARRAW["High-chrome ferrous alloys and foundry inputs for grinding wear parts: Magotteaux"]
+        CEMDRIVE["Cement mill and rotary-kiln gearboxes, motors and diagnostics: Flender"]
+        CEMEXP["Quarry ammonium-nitrate explosives and blasting consumables: Orica"]
+        CEMANRAW["Ammonia, nitric-acid and compressed-air inputs to ammonium nitrate: Orica Yarwun"]
+        STEELRECY["EAF steelmaking, scrap/iron units and steel recycling: Nucor, Steel Dynamics"]
+        EAFELECT["Graphite electrodes, carbon products and ferroalloy inputs: GrafTech, Elkem, Ferroglobe"]
+        EAFRAW["Petroleum needle coke, calcined anthracite and coal-tar pitch: GrafTech, Phillips 66, Elkem"]
+        STEEL["Electrical steel and transformer materials: ArcelorMittal, Nippon Steel, POSCO, Cleveland-Cliffs"]
+        STEELRAW["Iron ore, metallurgical coal, coke and steelmaking energy: BHP, Rio Tinto"]
+        STEELSI["High-purity ferrosilicon and silicon metal for electrical steel: Elkem, Ferroglobe"]
+        STEELQUARTZ["Quartz and silica feedstock for silicon and ferrosilicon: Sibelco"]
+        STEELCARB["Soderberg paste, carbon electrodes and furnace consumables: Elkem Carbon, Ferroglobe"]
+        STEELFURN["Silicon and ferrosilicon submerged-arc furnaces, heat recovery: Metso"]
+        POWERGEN["Power generation / utilities: GE Vernova, Siemens Energy, MHI, Caterpillar, Cummins, Constellation, Vistra"]
+        GASPIPE["Natural-gas gathering, pipelines, compression, and storage: Energy Transfer, Williams, Enbridge"]
+        GASPROC["Natural-gas dehydration, sweetening, NGL recovery and sulfur handling: Honeywell UOP, Baker Hughes, Chart"]
+        GASADS["Molecular sieves and activated adsorbents for dehydration, sulfur and CO2 removal: Honeywell UOP, Zeochem"]
+        GASSULF["Hydrodesulfurization, H2S/COS adsorption and Claus/tail-gas treatment: Clariant, Axens"]
+        GASBAHX["Brazed-aluminum heat exchangers and cryogenic cold boxes for NRU/NGL/LNG: Chart, Baker Hughes"]
+        GASRAW["Gas production and firm fuel supply: Chevron and upstream producers"]
+        GASUP["Natural-gas drilling, completion and production services: SLB, NOV"]
+        COMP["Pipeline compression trains and gas turbines: Baker Hughes, Siemens Energy, Chart"]
+        GASVALVE["Gas-pipeline valves, pumps, and mechanical seals: Flowserve, Emerson"]
+        ALLOY["Nickel/cobalt superalloys, forgings, and hot-section parts: ATI, Howmet, Carpenter"]
+        BEAR["Magnetic/precision bearings and compressor seals: SKF, Schaeffler, Timken"]
+        TUBE["Seamless/welded pipe and HRSG tubes: Tenaris, Vallourec"]
+        RAWMET["Nickel, cobalt, rhenium, and alloy inputs: Nornickel, Molymet, specialty-metal suppliers"]
+        REBYPROD["Molybdenite and copper-mine byproduct feed for rhenium: Codelco, Freeport, copper/molybdenum producers"]
+        TURBINE["Gas-turbine hot-section materials: Howmet, MHI, Siemens Energy, Chromalloy"]
+        NUC["Long-cycle nuclear / SMR candidates: BWXT, Cameco, NuScale, Oklo"]
+        SMR["Advanced SMR and TRISO fuel: Kairos, X-energy, Doosan, KHNP"]
+        NUCFUEL["Uranium conversion, enrichment, and HALEU: Cameco, Centrus, Urenco, Orano"]
+        FLUORRAW["Acid-grade fluorspar and AHF feedstock: Orbia/Koura and fluorine suppliers"]
+        WBGWAF["SiC/GaN substrates and epitaxy: Coherent, Wolfspeed, IQE"]
+        GRAPHIT["Ultra-pure graphite, carbon felt, and SiC-coated hot zones: Mersen, SGL Carbon"]
+        GA_RAW["Gallium recovery from bauxite, zinc, and fly ash: Indium, DOWA, 5N Plus"]
+        BATRAW["LFP cathode/anode and battery minerals: lithium, phosphate, iron, graphite; attribution pending"]
+        BATPHOS["Purified phosphoric acid, MAP, and phosphorus intermediates: ICL, OCP"]
+        BATPRAW["Phosphate rock and sulfuric acid feedstock: OCP phosphate chain"]
+        BATGRAPH["Synthetic graphite anode materials: NOVONIX and graphite suppliers"]
+        BATAAM["Natural graphite purification, spheronization and coating: Syrah Vidalia, Nouveau Monde Bécancour"]
+        BATNATG["Natural graphite concentrate and mine feed: Syrah Balama, Nouveau Monde Matawinie"]
+        BATCOKE["Petroleum needle coke precursor: Phillips 66, GrafTech"]
+        BATLI["Battery-grade lithium carbonate and hydroxide: Lithium Americas, Albemarle"]
+        BATLIRAW["Lithium brine, hard-rock and claystone resource feed: Albemarle, Lithium Americas"]
+        BATELY["Battery electrolyte, lithium salts, carbonate solvents and functional additives: Capchem, Enchem, Soulbrain; no Fluence/AESC BOM"]
+        BATCHEM["Conductive salts and functional additives: LiPF6, LiBF4, LiPO2F2; Kanto Denka, Orbia, Do-Fluoride, Morita, Capchem"]
+        BATSOLV["Battery-grade carbonate solvents: EC, DMC, EMC, DEC; UBE, Mitsubishi Chemical, Lotte Chemical"]
+        BATSEP["LIB separators and ceramic coating: Asahi Kasei/Celgard, SK IE Technology, W-SCOPE"]
+        BATFLUOR["Li-salt feedstocks: anhydrous HF, LiF and fluorine/phosphorus chemistry: LANXESS, Orbia, Stella Chemifa"]
+        BATCOAT["Separator coating materials: Arkema Kynar PVDF/Incellion, Solvay Solef, Nabaltec and Sasol boehmite"]
+        BATCOATEQ["Separator coating equipment and metrology: Nordson slot-die, Matthews Engineering roll-to-roll"]
+        BATPOLY["Separator base film and shutdown layer: UBE UPORE, Celgard PP/PE/PP, Teijin LIELSORT, Toray SETELA, Borouge PP"]
+        BATRESIN["Separator polymer resin: PP dry-process grades and upstream polyolefins: Borouge/Borealis"]
+        BATPETRO["Ethane, propane and gas feedstock for polyolefins: ADNOC Gas / ADNOC"]
+        BATPROP["Propylene and petrochemical feedstock: ADNOC Refining"]
+        BATCAT["Polyolefin process licenses and catalysts: Borstar, LyondellBasell, Clariant/Lummus, Grace"]
+        BATCATRAW["TiCl4, magnesium-source and organoaluminum cocatalyst chemistry: Tronox, Albemarle, Nouryon"]
+        BATALUM["Boehmite and high-purity alumina ceramic filler: Nabaltec, Sasol"]
+        BATDRY["Battery dry rooms and low-dew-point dehumidification: Munters"]
+        BATMFG["Cell manufacturing lines: Dürr X.Cellify and LEAD turnkey coating, stacking, welding, testing and electrolyte filling"]
+        BATEST["Formation, reliability and regenerative battery testing: Chroma ATE"]
+        GEOMAT["Geothermal corrosion-resistant heat-exchanger alloys: Outokumpu and specialty stainless/nickel/titanium suppliers"]
+        PDCMAT["Synthetic diamond grit and tungsten-carbide cutters: Element Six; no Fervo-specific supply disclosed"]
+        GEOCHEM["Cement additives, brines, lost-circulation and drilling-fluid chemistry: upstream suppliers undisclosed"]
+    end
+
+    R --> H
+    H --> G
+    H --> M
+    H --> C
+    H --> S
+    H --> HDDC
+    H --> SSDCTRL
+    C --> LINK
+    S --> LINK
+    C --> CXLHOST
+    C --> CXLMEM
+    CXLHOST --> CXLMEM
+    CXLHOST --> CXLFW
+    CXLFW --> CXLSTACK
+    CXLMEM --> LINK
+    CXLMEM --> CXLSW
+    CXLSW --> CXLSTACK
+    HDDC --> HDDUP
+    HDDC --> HDDMOTOR
+    HDDC --> HDDMEDIA
+    SSDCTRL --> S
+    LINK --> OPT
+    OPT --> OPTOIII
+    OPTOIII --> OPTSUB
+    OPTSUB --> OPTSOURCE
+    OPTSOURCE --> GA_RAW
+    OPTSOURCE --> OPTINDIUM
+    OPTSOURCE --> OPTGAS
+    OPTOIII --> OPTEQ
+    OPTEQ --> OPTGAS
+    OPTOIII --> OPTINSPECT
+    OPTOIII --> OPTMETRO
+    OPTOIII --> OPTWTEST
+    LINK --> CON
+    G --> O
+    M --> O
+    C --> O
+    O --> SW
+    O --> OPT
+    SW --> OPT
+    OPT --> FM
+    OPT --> CON
+    G --> F
+    M --> F
+    F --> SUB
+    F --> ABF
+    SUB --> CCL
+    SUB --> CUFOIL
+    SUB --> GLASS
+    SUB --> PLATE
+    SUB --> FILLER
+    F --> EDA
+    F --> LITH
+    F --> PROC
+    F --> MET
+    M --> TEST
+    M --> BACK
+    G --> TEST
+    G --> PROC
+    LITH --> WAF
+    PROC --> WAF
+    PROC --> CHEM
+    PROC --> PHOTO
+    PROC --> QUARTZ
+    MET --> CHEM
+    TEST --> GAS
+    GAS --> GASDEL
+    GAS --> SPEC
+    GAS --> GASEQ
+    SPEC --> RAREGAS
+    SPEC --> ABATE
+    SPEC --> GASPUR
+    GASPUR --> GASMON
+    SPEC --> FLUORRAW
+    CHEM --> GASDEL
+    PROC --> GASEQ
+    PROC --> SPEC
+    SPEC --> GASEQ
+    GASEQ --> GASMON
+    PROC --> CMP
+    CMP --> CMPABR
+    CMPABR --> CMPRAW
+    CMPABR --> PUPAD
+    PUPAD --> CMPPADRAW
+    CMP --> CMPFILTERRAW
+    PUPAD --> PACK
+    PUPAD --> CONDITION
+    CMP --> PACK
+    CMP --> CHEM
+    CHEM --> PACK
+    SPEC --> WASTE
+    GASEQ --> WASTE
+    GASEQ --> ABATE
+    ABATE --> WASTE
+    BACK --> ABF
+    BACK --> VAC
+    WAF --> POLY
+    POLY --> POLYRAW
+    POLY --> POLYCHLOR
+    WAF --> GAS
+    WAF --> CHEM
+    QUARTZ --> WAF
+    FIBER --> FIBERPRE
+    FIBERPRE --> FIBERDOP
+    CHEM --> GAS
+    F --> UPW
+    F --> HVAC
+    F --> WASTE
+    WATER --> RO
+    RO --> ROIX
+    RO --> UPW
+    RO --> WATERMEM
+    ROIX --> WATERRESIN
+    WATER --> WATERCHEM
+    UPW --> REUSE
+    H --> GRID
+    GRID --> DIST
+    DIST --> UPSLEAD
+    UPSLEAD --> LEADMAKE
+    LEADMAKE --> LEADREC
+    DIST --> HVDC
+    HVDC --> PASS
+    PASS --> PASSFILM
+    PASS --> PASSCERAM
+    PASS --> PASSMAG
+    PASS --> PASSALUM
+    PASSFILM --> PASSFILMRAW
+    PASSALUM --> PASSALUMRAW
+    PASSCERAM --> PASSCERAMRAW
+    PASSMAG --> PASSMAGRAW
+    PASSALUM --> PASSALUMSUP
+    PASSALUMSUP --> PASSALUMRAW
+    PASSCERAMRAW --> PASSBARAW
+    PASSCERAMRAW --> PASSTIRAW
+    PASSALUMRAW --> AL
+    HVDC --> G
+    HVDC --> WBG
+    WBG --> WBGWAF
+    WBGWAF --> WBGPOW
+    WBGWAF --> GRAPHIT
+    WBGWAF --> WBGFURN
+    WBGWAF --> EPIEQ
+    EPIEQ --> SPEC
+    EPIEQ --> GA
+    GA --> GA_RAW
+    PASS --> G
+    GRID --> GEN
+    GRID --> TRMAT
+    GRID --> TRCOMP
+    GRID --> TRINS
+    GRID --> TRFLUID
+    GRID --> BUSH
+    GRID --> TRCORE
+    GRID --> GIS
+    GIS --> GISSEAL
+    GIS --> GASSVC
+    GIS --> GISSTD
+    GISSTD --> GISTEST
+    GISSTD --> GISPD
+    GIS --> GISTEST
+    GIS --> GISPD
+    GRID --> TRMON
+    TRCOMP --> CUWIND
+    TRINS --> PAPER
+    TRFLUID --> OIL
+    TRMON --> DGA
+    TRCOMP --> WINDSTRIP
+    GRID --> TROEM
+    TROEM --> CUWIND
+    TROEM --> PAPER
+    TROEM --> OIL
+    PAPER --> TRPULP
+    OIL --> TRBIO
+    GRID --> CABLE
+    DIST --> MOD
+    GEN --> GASGEN
+    POWERGEN --> GASGEN
+    GASGEN --> GASPIPE
+    GASGEN --> GASCTRL
+    GASPIPE --> COMP
+    GASPIPE --> GASVALVE
+    GASPIPE --> GASPROC
+    GASPROC --> GASADS
+    GASPROC --> GASSULF
+    GASPROC --> GASBAHX
+    GASPROC --> GASRAW
+    COMP --> GASCTRL
+    GASGEN --> ALLOY
+    GASGEN --> BEAR
+    COMP --> BEAR
+    GASPIPE --> TUBE
+    ALLOY --> RAWMET
+    RAWMET --> REBYPROD
+    GASGEN --> TURBINE
+    GASPIPE --> GASRAW
+    H --> NUCLEAR
+    NUCLEAR --> NUC
+    NUCLEAR -.-> GASGEN
+    NUC --> SMR
+    SMR --> NUCFUEL
+    NUC --> NUCFUEL
+    H --> GEO
+    H --> LDES
+    H --> FLEX
+    GEO --> GEOWELL
+    GEOWELL --> GEOBIT
+    GEO --> GEOPUMP
+    GEOWELL --> GEOCEMENT
+    GEOWELL --> GEOLOG
+    GEOWELL --> GEOHEAD
+    GEOHEAD --> GEOHEADALT
+    GEOHEAD --> GEOSEAL
+    GEOPUMP --> GEOPUMPCOMP
+    GEOPUMP --> GEOPUMPALT
+    GEO --> GEOTURB
+    GEOTURB --> GEOTHX
+    GEOALT -.-> GEOTHX
+    GEO --> GEOCTRL
+    GEOWELL --> TUBE
+    GEOCTRL --> DIST
+    LDES --> BATCELL
+    LDES --> BESSBOP
+    BESSBOP --> BESSTHERM
+    BESSBOP --> BESSFIRE
+    BESSTHERM --> BESSCOMP
+    BESSFIRE --> BESSDET
+    BESSFIRE --> BESSSUP
+    BESSCOMP --> BESSREF
+    LDES --> PCS
+    BATCELL --> BATRAW
+    BATCELL --> BATELY
+    BATELY --> BATCHEM
+    BATELY --> BATSOLV
+    BATCELL --> BATSEP
+    BATCHEM --> BATFLUOR
+    BATSEP --> BATCOAT
+    BATSEP --> BATCOATEQ
+    BATSEP --> BATPOLY
+    BATCOAT --> BATALUM
+    BATPOLY --> BATRESIN
+    BATRESIN --> BATPETRO
+    BATRESIN --> BATPROP
+    BATRESIN --> BATCAT
+    BATCAT --> BATCATRAW
+    BATCELL --> BATDRY
+    BATCELL --> BATMFG
+    BATCELL --> BATEST
+    BATRAW --> BATPHOS
+    BATPHOS --> BATPRAW
+    BATRAW --> BATGRAPH
+    BATRAW --> BATAAM
+    BATAAM --> BATNATG
+    BATGRAPH --> BATCOKE
+    BATRAW --> BATLI
+    BATLI --> BATLIRAW
+    GEOTHX --> GEOMAT
+    GEOBIT --> PDCMAT
+    GEOCEMENT --> GEOCHEM
+    BESSBOP --> DIST
+    PCS --> DIST
+    BESSBOP --> CABLE
+    GEO -.-> GASGEN
+    LDES -.-> GASGEN
+    FLEX -.-> GRID
+    O --> RACKCOOL
+    O --> CLOSED
+    CLOSED --> COLDPLATE
+    CLOSED --> HX
+    CLOSED -.-> WATER
+    G --> COLDPLATE
+    RACKCOOL --> COLDPLATE
+    COLDPLATE --> TIM
+    RACKCOOL --> THERM
+    RACKCOOL --> COUP
+    RACKCOOL --> SEAL
+    RACKCOOL --> FILTER
+    COUP --> POLYCOOL
+    SEAL --> POLYCOOL
+    FILTER --> POLYCOOL
+    COLDPLATE --> POLYCOOL
+    POLYCOOL --> COOLMAT
+    COOLMAT --> COOLCHEM
+    COLDPLATE --> FLUID
+    FLUID --> COOLCHEM
+    THERM --> VALVE
+    THERM --> HX
+    HX --> HXMAT
+    HX --> REUSE
+    REUSE --> FLUID
+    REUSE --> WATER
+    WATER --> FLUID
+    WATER --> BIOCHEM
+    BIOCHEM --> FLUID
+    REUSE --> UPW
+    GRID --> EPC1
+    EPC1 --> MOD
+    CABLE --> EPC1
+    CABLE --> CU
+    CU --> MININGBLAST
+    CU --> MININGEQ
+    CU --> MININGPROC
+    CU --> CUSMELT
+    CUSMELT --> CUACID
+    AL --> ALRAW
+    ALRAW --> ALCAUST
+    ALRAW --> ALANODE
+    ALRAW --> ALELECT
+    STEEL --> STEELRAW
+    STEEL --> STEELSI
+    STEELSI --> STEELQUARTZ
+    STEELSI --> STEELCARB
+    STEELSI --> STEELFURN
+    CABLE --> CABLEMAT
+    CABLEMAT --> CABLEPEROX
+    CABLEMAT --> CABLEFEED
+    EPC1 --> CONCRETE
+    EPC1 --> BUILDSTEEL
+    CONCRETE --> AGG
+    CONCRETE --> CEMENT
+    CONCRETE --> BUILDSTEEL
+    CEMENT --> CEMQUARRY
+    CEMENT --> CEMEQUIP
+    CEMENT --> CEMENTRAW
+    CEMEQUIP --> CEMREF
+    CEMREF --> CEMREFRAW
+    CEMEQUIP --> CEMWEAR
+    CEMWEAR --> CEMWEARRAW
+    CEMEQUIP --> CEMDRIVE
+    CEMQUARRY --> CEMEXP
+    CEMEXP --> CEMANRAW
+    BUILDSTEEL --> STEELRECY
+    STEELRECY --> EAFELECT
+    EAFELECT --> EAFRAW
+    GRID --> POWERGEN
+    GEN --> POWERGEN
+    GASRAW --> GASUP
+    POWERGEN --> TURBINE
+    GEN --> TURBINE
+    POWERGEN --> NUC
+    GRID --> STEEL
+    GRID --> AL
+    CU --> CABLE
+    AL --> CABLE
+    STEEL --> GRID
+    FM --> FIBER
+    FIBER --> WAF
+
+    classDef root fill:#0f172a,color:#ffffff,stroke:#0f172a;
+    classDef demand fill:#e0f2fe,stroke:#0284c7,color:#0c4a6e;
+    classDef p1 fill:#dcfce7,stroke:#16a34a,color:#14532d;
+    classDef infra fill:#fef3c7,stroke:#d97706,color:#78350f;
+    classDef raw fill:#f3e8ff,stroke:#9333ea,color:#581c87;
+
+    class R root;
+    class H,G,M,C,S,HDDC,SSDCTRL,LINK,CXLMEM,CXLSW,CXLSTACK,O,CXLHOST,CXLFW,SW,OPT demand;
+    class HDDUP,HDDMOTOR,HDDMEDIA,F,SUB,ABF,CCL,CUFOIL,GLASS,PLATE,FILLER,EDA,LITH,PROC,MET,TEST,BACK,VAC,WBGFURN,EPIEQ,WAF,POLY,POLYCHLOR,GAS,GASDEL,SPEC,GA,GASEQ,GASPUR,GASMON,CMP,CMPABR,PUPAD,CONDITION,PACK,RAREGAS,ABATE,CHEM,PHOTO,QUARTZ,FIBER,FIBERPRE,OPTOIII,OPTSUB,OPTEQ,OPTINSPECT,OPTMETRO,OPTWTEST,WBGPOW,TRCOMP,TRINS,TRMON,CUWIND,PAPER,OIL,DGA,WINDSTRIP,TROEM,BUSH,ROIX,BATCELL,BATSEP,BATDRY,BATMFG,BATEST,BESSTHERM,BESSFIRE,BESSCOMP,BESSDET,BESSSUP,BESSREF,GEOBIT,GEOPUMP,GEOCEMENT,GEOLOG,GEOHEAD,GEOHEADALT,GEOSEAL,GEOPUMPCOMP,GEOPUMPALT,GEOTHX,GEOALT,GASPROC,GASBAHX,STEELFURN,ALELECT,CEMEQUIP,CEMDRIVE,PASSALUM p1;
+    class UPW,HVAC,WASTE,RO,GRID,DIST,UPSLEAD,LEADMAKE,HVDC,PASS,GEN,GASGEN,GASCTRL,NUCLEAR,GEO,LDES,FLEX,BESSBOP,PCS,GEOWELL,GEOTURB,GEOCTRL,TRMAT,TRFLUID,GIS,GISSEAL,GASSVC,GISSTD,GISTEST,GISPD,TRCORE,RACKCOOL,COLDPLATE,CLOSED,TIM,THERM,HX,REUSE,WATER,COUP,SEAL,FILTER,POLYCOOL,VALVE,FLUID,BIOCHEM,CABLE,EPC1,MOD,CONCRETE,BUILDSTEEL infra;
+    class CU,MININGBLAST,MININGEQ,MININGPROC,CUSMELT,CUACID,AL,ALRAW,ALCAUST,ALANODE,CABLEMAT,CABLEPEROX,CABLEFEED,LEADREC,CEMENT,AGG,CEMENTRAW,CEMQUARRY,CEMREF,CEMREFRAW,CEMWEAR,CEMWEARRAW,CEMEXP,CEMANRAW,WATERMEM,WATERRESIN,WATERCHEM,CMPRAW,CMPPADRAW,CMPFILTERRAW,HXMAT,COOLMAT,COOLCHEM,PASSFILM,PASSCERAM,PASSMAG,PASSFILMRAW,PASSALUMRAW,PASSCERAMRAW,PASSMAGRAW,PASSALUMSUP,PASSBARAW,PASSTIRAW,OPTSOURCE,OPTINDIUM,OPTGAS,STEELRECY,EAFELECT,EAFRAW,STEEL,STEELRAW,STEELSI,STEELQUARTZ,STEELCARB,TRPULP,TRBIO,POWERGEN,GASPIPE,GASADS,GASSULF,GASRAW,GASUP,COMP,GASVALVE,ALLOY,BEAR,TUBE,RAWMET,REBYPROD,TURBINE,NUC,SMR,NUCFUEL,FLUORRAW,WBGWAF,GRAPHIT,GA_RAW,POLYRAW,FIBERDOP,BATRAW,BATPHOS,BATPRAW,BATGRAPH,BATAAM,BATNATG,BATCOKE,BATLI,BATLIRAW,BATELY,BATCHEM,BATSOLV,BATFLUOR,BATCOAT,BATCOATEQ,BATPOLY,BATRESIN,BATPETRO,BATPROP,BATCAT,BATCATRAW,BATALUM,GEOMAT,PDCMAT,GEOCHEM raw;
